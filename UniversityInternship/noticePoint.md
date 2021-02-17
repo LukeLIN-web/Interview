@@ -29,3 +29,10 @@ I am free Jan 5, 11 or 12, 7:30 or 8am my time in the morning, 9:30 or 10pm your
 1. 把CV和面试时的slides中的内容弄清楚，
 2. 面对可能问的问题准备好中英文答案，
 3. 尽可能了解对方research group现在在做的项目，应该就能比较好地应付面试了。
+
+## 陶瓷信
+
+.Research Interest,重点段。同套磁面试，重中之重。建议你在套磁信这里就把针对此lab的ri想清楚60%，如果他肯给你面试再继续深化细化，也别浪费过多时间在未知结果的套磁信上。RI可以用question（句子）或topics（关键词）的形式呈现，我建议前者，这点各自根据专业整理清楚一个逻辑系列研究问题，写下来吧。The key in this game is FIT. 你或许会收到很多拒信夸你accomplished， productive，but not a good fit/not interested in your skillset.
+
+尽可能在段首句用**粗体标出本段关键词**这就在给予你的阅读者最低阅读成本以及足够的自由去阅读。比如老师对你的career goal不感兴趣，他立马看到粗体关键词后可以选择跳过此段。这相当于一个可以折叠的代码块，或是“阅读全文”的链接或按键，尽可能由阅读者自主选取阅读内容。有了代码块，也相当于解放了你的篇幅，可以扩充到400-500字而不显冗长杂乱。
+
