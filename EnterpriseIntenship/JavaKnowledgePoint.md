@@ -221,6 +221,37 @@ new 一个 Thread，线程进入了新建状态。调用 `start()`方法，会�
 
 ### Java 容器
 
+#### arraylist
+
+ 底层实现, 默认为10 , *//扩容newCapacity = (int) ( 1.5 \* oldCapacity )*
+
+- 如果提前知道数组元素较多，可以在添加元素前通过调用ensureCapacity()方法提前增加容量以减小后期容量自动增长的开销。
+-  \* 也可以通过带初始容量的构造器初始化这个容量。
+
+-  ArrayList不是线程安全的。
+-  \* 如果需要应用到多线程中，需要在外部做同步
+
+```java
+ private void grow(int minCapacity) {
+    	 // 获取到ArrayList中elementData数组的内存空间长度
+        int oldCapacity = elementData.length;
+        // 扩容到原来的1.5倍
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        // 判断一下新数组的长度容量够不够，够了就直接使用这个长度创建数组
+        // 不够就将数组长度设置为需要的长度
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        // 判断预设值的大小是否超过了默认的最大值
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        // 调用Arrays.copyOf方法将elementData数组指向新的内存空间时newCapacity的连续空间
+        // 并将elementData的数据复制到新的内存空间
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+```
+
+
+
 #### hashmap, concurrentmap
 
 JDK1.8的实现降低锁的粒度，JDK1.7版本锁的粒度是基于Segment的，包含多个HashEntry，而JDK1.8锁的粒度就是HashEntry（首节点）
