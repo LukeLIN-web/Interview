@@ -26,6 +26,22 @@ hashmap 最常用, 没有顺序,  非线程安全的, 数组长度默认是16, �
 
 ####   **5、JVM和垃圾回收：这部分学的不好，只看了垃圾回收的相关内容，都被面试官绕开了，就记得问了一道String存放在哪里，我没答出来。还追问了两个JVM的问题（不了解）** 
 
+没有变量引用, 就不会被访问, 就可以回收. 用有向图来判断对象是否可达.
+
+内存泄漏的原因: 静态集合类 ,各种连接, 变量不合理的作用域.
+
+首先加载类加载器, 然后extloader , 然后app loader,找到路径对应的class文件, 加载到内存中, 然后把这些静态数据转换成方法区中的数据结构, 堆中生成一个对象, 
+
+
+
+JVM类加载机制分为五个部分：加载，验证，准备，解析，初始化，下面我们就分别来看一下这五个过程。其中加载、检验、准备、初始化和卸载这个五个阶段的顺序是固定的，而解析则未必。为了支持动态绑定，解析这个过程可以发生在初始化阶段之后。
+
+JVM将class文件字节码文件加载到内存中， 并将这些静态数据转换成方法区中的运行时数据结构，在堆中生成一个代表这个类的java.lang.Class 对象，作为访问方法区这些数据结构的入口。这个过程主要就是类加载器完成。
+
+1. 启动类加载器bootstrap loader, cpp写的, java中看不到
+2. 扩展类加载器。
+3. 应用程序类加载器。
+
 
 
 String  s = new String("123"); /* 严格来说首先肯定会在堆中创建一个123的对象，然后再去判断常量池中是否存在123的对象， 如果不存在，则在常量池中创建一个123的常量(与堆中的123不是一个对象)， 如果存在，则不做任何操作.
@@ -33,8 +49,6 @@ String  s = new String("123"); /* 严格来说首先肯定会在堆中创建一�
 
 
 ####   6、多线程：synchronized，可重入锁（当时太紧张了，把几个锁都搞混了，反应了半天，说了句不会，面试完突然反应过来是reentranlock），死锁，threadlocal。 
-
-
 
  Java 官方对从 JVM 层面对 `synchronized` 较大优化，所以现在的 `synchronized` 锁效率也优化得很不错了。
 
@@ -46,9 +60,7 @@ String  s = new String("123"); /* 严格来说首先肯定会在堆中创建一�
 
 synchronized 依赖于 JVM 而 ReentrantLock 依赖于 API
 
-`synchronized` 是依赖于 JVM 实现的，自动释放,前面我们也讲到了 虚拟机团队在 JDK1.6 为 `synchronized` 关键字进行了很多优化，但是这些优化都是在虚拟机层面实现的，并没有直接暴露给我们。`ReentrantLock` 是 JDK 层面实现的（也就是 API 层面，需要用户手动 lock() 和 unlock() 方法配合 try/finally 语句块来完成），在大量的数据操作下，对于 JVM 的内存压力，基于 API 的 ReentrantLock 会开销更多的内存。所以我们可以通过查看它的源代码，来看它是如何实现的。
-
-
+`synchronized` 是依赖于 JVM 实现的，自动释放,前面我们也讲到了 虚拟机团队在 JDK1.6 为 `synchronized` 关键字进行了很多优化，但是这些优化都是在虚拟机层面实现的，并没有直接暴露给我们。`ReentrantLock` 是 JDK 层面实现的（也就是 API 层面，需要用户手动 lock() 和 unlock() 方法配合 try/finally 语句块来完成），在大量的数据操作下，对于 JVM 的内存压力，基于 API 的ReentrantLock 会开销更多的内存。所以我们可以通过查看它的源代码，来看它是如何实现的。
 
 相比`synchronized`，`ReentrantLock`增加了一些高级功能。主要有三点：
 
@@ -115,7 +127,7 @@ synchronized void method() {
 
 
 
-实例锁:
+#### 实例锁:
 
 **1、 锁住实体里的非静态变量**
 
@@ -129,7 +141,7 @@ this 指的是当前对象实例本身，所以，所有使用 `synchronized(thi
 
 最简单、最直观的一种方式，直接加在方法返回类型前。
 
-## **类锁**
+#### **类锁**
 
 类锁是加载类上的，而类信息是存在 JVM 方法区的，并且整个 JVM 只有一份，方法区又是所有线程共享的，所以类锁是所有线程共享的。
 
@@ -147,7 +159,9 @@ this 指的是当前对象实例本身，所以，所有使用 `synchronized(thi
 
 
 
-####   7、Java容器：hashmap，concurrenthashmap，底层实现 
+####   7、Java容器：hashmap
+
+concurrenthashmap，底层实现 
 
 同HashMap一样，Segment包含一个HashEntry数组，数组中的每一个HashEntry既是一个键值对，也是一个链表的头节点。像这样的Segment对象，在ConcurrentHashMap集合中有多少个呢？有2的N次方个，共同保存在一个名为segments的数组当中。这样的二级结构，和数据库的水平拆分有些相似。
 
@@ -155,7 +169,7 @@ this 指的是当前对象实例本身，所以，所有使用 `synchronized(thi
 
 Segment的写入是需要上锁的，因此对同一Segment的并发写入会被阻塞。
 
-那假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率
+那假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率.
 
 这就是ConcurrentHashMap所使用的锁分段技术，首先将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。
 
@@ -195,9 +209,9 @@ ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。Segme
 
 ####   8、计算机网络：三次握手四次挥手，常用的状态码，https实现加密的方法（不会），get post区别。 
 
-**TCP连接建立过程：**首先Client端发送连接请求报文syn  ， Server段接受连接后回复syn和ACK报文，并为这次连接分配资源。Client端接收到ACK报文后也向Server 发ACK报文，并分配资源，这样TCP连接就建立了。
+**TCP连接建立过程：**首先Client端发送连接请求报文syn ， Server段接受连接后回复syn和ACK报文，并为这次连接分配资源。Client端接收到ACK报文后也向Server 发ACK报文，并分配资源，这样TCP连接就建立了。
 
-　　**TCP连接断开过程：**假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说"我Client端没有数据要发给你了，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。"一次 , 客户端进入fin wait1 , sever进入close wait , 停止接收客户端的data.
+**TCP连接断开过程：**假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说"我Client端没有数据要发给你了，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。"一次 , 客户端进入fin wait1 , sever进入close wait , 停止接收客户端的data.
 
 所以服务器先发送ACK，告诉Client端，请求收到了，但是服务器还没发完,这个时候Client端就进入FIN_WAIT2状态，继续等待Server端的FIN报文。两次 
 
@@ -264,7 +278,14 @@ http状态码 500 （服务器内部错误） 服务器遇到错误，无法完�
 
 
 
-
+```
+//普通索引
+alter table table_name add index index_name (column_list) ;
+//唯一索引
+alter table table_name add unique (column_list) ;
+//主键索引
+alter table table_name add primary key (column_list) ;
+```
 
 不一定快:
 
@@ -273,7 +294,7 @@ http状态码 500 （服务器内部错误） 服务器遇到错误，无法完�
 2. 索引也需要物理空间,聚集索引空间更大
 3. 索引也需要动态维护, slower 数据维护速度
 
-对于哈希索引来说，底层的数据结构就是哈希表，因此在绝大多数需求为单条记录查询的时候，可以选择哈希索引，查询性能最快；其余大部分场景，建议选择BTree索引。
+对于哈希索引来说，底层的数据结构就是哈希表，因此在绝大多数需求为单条记录查询的时候，可以选择哈希索引，查询性能最快；其余大部分场景比如有排序的场景，建议选择BTree索引。
 
 所以说，如果我们写select * from user where indexname = 'xxx'这样没有进行任何优化的sql语句，默认会这样做：
 
@@ -318,9 +339,7 @@ string类
 
 ####   12、问了内存泄漏和内存溢出，堆内存和栈内存溢出的区别。
 
-没有free就是泄露,会有很多内存碎片.
-
-
+没有free就会泄露,会有很多内存碎片.
 
 当栈内存满的时候，Java抛出java.lang.StackOverFlowError异常而堆内存满的时候抛出java.lang.OutOfMemoryError: Java Heap Space错误.
 
@@ -352,7 +371,7 @@ java内存泄漏的原因:
 
 
 
-TOPk问题, 
+### TOPk问题, 
 
 出现率最高的10个.
 
