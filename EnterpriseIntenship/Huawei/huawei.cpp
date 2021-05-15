@@ -4,9 +4,10 @@
 #include<iostream>
 #include <string>
 using namespace std;
-//太麻烦了!! /一个是用map, iv, ix, i, x 加到map中
+//太麻烦了!! 一个是用map, iv, ix, i, x 加到map中
 // map<string,int> m; m.insert('i',1); m.insert('ix',4);看如果it和it+1在map中, 就+4,然后右移2位, 否则就加it对应的值1,右移一位,
-// 这样拓展性好. 或者比第二位大, 加进去, 比第二位小,那就减去I,
+// 这样拓展性好. 或者比第二位大, 加进去, 比第二位小,那就减去I
+
 int main(){
     string s ;
     cin >>s;

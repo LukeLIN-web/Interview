@@ -11,12 +11,14 @@ using namespace std;
 // 递归 dp[i][j ] = dp[i-1][j] + a[i][j], dp[]
 //return dp[row][col] 首先都初始化为-1
 //把可能的值都记下来,然后排序选择最接近的.
+
 int main(){
     vector<vector<vector<int>>> dp ;
 
     int mat[15][15] = { 0 };
     int t,row,col;
     cin >>  row>> col >> t;  //cin遇到空格就中断
+
     for(int i = 0 ; i < row ; i ++) {
         for (int j = 0 ; j < col ; j ++){
             cin >> mat[i][j];
@@ -60,6 +62,7 @@ int main(){
     }
     return 0;
 }
+
 ////
 //// Created by 12638 on 2021/4/7.
 ////
