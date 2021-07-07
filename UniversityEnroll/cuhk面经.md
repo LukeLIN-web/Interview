@@ -1,4 +1,6 @@
 我记得ee这边，有两种情况，一个是你学校好，成绩足够好，而且有国奖，即很有hkpfs竞争力的，虽然没有高水平论文，也有可能被选上。另一种情况是学校好，成绩一般，当然也没有国奖，但是发表过高水平论文，可能性也比较大。（我记得当时答疑会上一人说发表过trans on image processing，当时汪小刚老师说过这个可以加分）
+
+
 答疑会上，cs和ie这边我记得当时林老师没有怎么说国奖，成绩这种事，主观认为可能更看重科研潜力吧～林老师都出来答了，我就不班门弄斧啦。链接：https://www.zhihu.com/question/41537308/answer/124309142
 
 # ece
@@ -82,47 +84,13 @@ JHU MSCS学长，医学方向，算法题是一个数列找出最常出现的数
 
 数列里第k大的数
 
-
-
-# 我的面试
-
-## 面试准备
-
-你做了什么?你做了 哪个level的工作? 是用了别人的库, 还是自己把每行都写出来了? which level?
-
-I use other's interface to connect , send signal. 
-
-你联系了老师吗?
-
-I connect professor,  qiang XU, he encouraged me.
-
-Zili shao, he told me that I could connect him at July.
-
-I interested in professor mingChang Yang and Patrick Ching Lee. I have learned that Professor Lee about deploy a high performance system, and mixture store structure, data recovering.  I think it is interesting and promising future.
-
-这个事务是怎么实现的? 不同的事务是怎么弄的? 我说有fence 这个事务提交前不能. 
-
-事务根据操作类型 申请锁, 请求发送给并发控制管理器.  manger grant lock , transaction continue. 可能会有死锁, 死锁要回滚其中一个.代价很大. 在执行事务的过程中，事务访问过的数据会缓存在事务cache中，修改过的cache一致性协议会检测各事务之间的冲突。如果产生冲突，对应的事务cache中修改过的数据全部作废，该事务重新执行；如果没有冲突产生，就在事务结束时把事务cache中的数据更新到内存中。全部加锁就慢, 乐观不一致再回滚  就快.
-
-在事务提交时，处理器核心会获得一个全局唯一令牌，这是保证同时只允许有一个事务提交。 获得令牌的处理器 commit 修改数据的同时，通过总线broadcast 向其他处理器其修改的数据内容，其他处理器在监听到广播内容后，比照自己的Update Buffer中的修改数据是否和广播内容冲突，如果发生冲突，则该处理器中正在执行的事务重新执行。也就是说，获得提交令牌的处理器具有最高的权限，其处理完成的事务一定可以保证提交成功。
-
-如果在事务执行过程中发生Update Buffer溢出时，该处理器会请求获取提交令牌，同时持续持有这个令牌直到自己的事务结束，在此过程中，其他处理器不允许提交事务，同时该处理器新产生的数据直接更新至内存。
-
-
-
 你来cuhk可以干啥? 
-
-
 
 反问
 
 何时发邮件通知  .  录用率：
 
 When will get the notification? What percentage of people will receive offer?
-
-
-
-### cse 
 
 问了很多问题，比如“比较下快排和归并排序”、“快排的原理”、“介绍下二分算法”
 
@@ -134,13 +102,9 @@ both from idea divide and conquer, 递归实现, 归并 merge , 快排 partition
 
 quick sort  unstable .don't need extra space complexity. 如果 本来有序, 那么退化为O(square of n)
 
-另一个老师开始问我操作系统相关的，也都是一些基础知识，但就是不知道用英文该怎么说
-
-
+另一个老师开始问操作系统相关的，也都是一些基础知识，但就是不知道用英文该怎么说
 
 # 实际面试
-
-我没了, 两个题目全错了, 我是sb
 
 就两分钟介绍一下自己.
 
@@ -150,7 +114,7 @@ quick sort  unstable .don't need extra space complexity. 如果 本来有序, �
 
 因为只能有偶数个被反转,C(0,8)+C(2,8)+C(4,8)+C(6,8)+C(8,8)
 
-还有就问个和rank的关系, 我也错了
+还有就问个和rank的关系, 
 
 ![](https://pic3.zhimg.com/80/v2-3c91966739eeace08b1e78f61873dfce_1440w.jpg)
 
@@ -165,4 +129,16 @@ quick sort  unstable .don't need extra space complexity. 如果 本来有序, �
 我室友问了quicksort, merge sort,二分查找. 二叉搜索树.教授觉得他cs基础比较薄弱, 他然后和教授说, 他没上过数据结构,  他一周前刚学的.  不是为了面试 , 而是为了弥补自己薄弱的基础.教授问他你是不是知道了面试会考啥.  还考了指针的大小.
 
 答案是:在32位系统中为4字节；在64位系统中为8字节；
+
+
+
+
+
+通过可以先来做毕设, 来工作工作适应适应环境.  
+
+英语提高.   研究要写文章, 非常重要. 英语的论文写多了对你很有好处，就写过论文，没写过论文，完全就是两个人
+
+那个老师还问我说为什么你不去美国？
+
+我说香港比较近，又可以享受海外留学的待遇
 
