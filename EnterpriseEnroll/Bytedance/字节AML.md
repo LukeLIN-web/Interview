@@ -217,7 +217,7 @@ class LFUCache:
         self.minFreq = 0
         self.freqMap = collections.defaultdict(create_linked_list)
         self.keyMap = {}
-
+# 看前面有没有, 如果有, 删除这个元素, 如果fremap[freq]没了pop掉
     def delete(self, node):
         if node.pre:
             node.pre.nex = node.nex
@@ -225,38 +225,38 @@ class LFUCache:
             if node.pre is self.freqMap[node.freq][0] and node.nex is self.freqMap[node.freq][-1]:
                 self.freqMap.pop(node.freq)
         return node.key
-        
+        #删除feremap中这个频率, 加到下一个频率的最后, 然后更新minFreq
     def increase(self, node):
         node.freq += 1
-        self.delete(node)
-        self.freqMap[node.freq][-1].pre.insert(node)
+        self.delete(node) # 先删除
+        self.freqMap[node.freq][-1].pre.insert(node) #[-1]是tail
         if node.freq == 1:
             self.minFreq = 1
         elif self.minFreq == node.freq - 1:
             head, tail = self.freqMap[node.freq - 1]
             if head.nex is tail:
-                self.minFreq = node.freq
+                self.minFreq = node.freq # 如果下面的频率已经被删除的了话,那就min就为大一些的. 
 
     def get(self, key: int) -> int:
         if key in self.keyMap:
-            self.increase(self.keyMap[key])
-            return self.keyMap[key].val
+            self.increase(self.keyMap[key]) # 找到
+            return self.keyMap[key].val # return
         return -1
-
+#在就更新, 不在就插keymap, 如果超出就deletemin, 从keymappop. 最后插入node.
     def put(self, key: int, value: int) -> None:
         if self.capacity != 0:
             if key in self.keyMap:
                 node = self.keyMap[key]
-                node.val = value
+                node.val = value # 更新值
             else:
-                node = Node(key, value)
+                node = Node(key, value) # 默认freq为0 
                 self.keyMap[key] = node
                 self.size += 1
             if self.size > self.capacity:
                 self.size -= 1
-                deleted = self.delete(self.freqMap[self.minFreq][0].nex)
+                deleted = self.delete(self.freqMap[self.minFreq][0].nex)#头部. 
                 self.keyMap.pop(deleted)
-            self.increase(node)
+            self.increase(node) # 最后都要 更新频率
 ```
 
   PS:二面到四面是一天内面完的，[百度]()的二面也在这一天
