@@ -2,7 +2,6 @@
 
 * [README](README.md)
 * [EnterpriseEnroll](enterpriseenroll/README.md)
-  * [disifanshi](EnterpriseEnroll/disifanshi.md)
   * [二面第四范式](enterpriseenroll/er-mian-di-si-fan-shi.md)
   * [Bytedance](enterpriseenroll/bytedance/README.md)
     * [字节AML](enterpriseenroll/bytedance/zi-jie-aml.md)
