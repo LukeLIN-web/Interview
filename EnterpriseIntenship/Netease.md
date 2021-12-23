@@ -1,10 +1,16 @@
 # Netease 平台研发工程师（技术中心）
 
+
+
+网易杭研所 有数BI部***端开发日常实习面经
+
+https://www.nowcoder.com/discuss/695901?type=post&order=create&pos=&page=1&ncTraceId=&channel=-1&source_id=search_post_nctrack&subType=2
+
+
+
 这个应该是校招.
 
 他们非常喜欢问, 你遇到了什么困难? 
-
-
 
 自我介绍+[项目]()介绍 
 
