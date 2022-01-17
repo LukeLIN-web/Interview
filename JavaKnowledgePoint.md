@@ -7,8 +7,6 @@ https://gitee.com/cosen1024/Java-Interview
 操作系统问
 进程线程区别
 
-
-
 通信，io，Linux操作指令，死锁，多路复用
 
 多路复用:
