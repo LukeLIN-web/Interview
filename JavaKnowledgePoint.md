@@ -2,8 +2,6 @@
 
 https://gitee.com/cosen1024/Java-Interview
 
-通信，io，Linux操作指令，死锁，多路复用
-
 多路复用:
 
 JAVA的话，大概会问hashmap和concurrenthashmap，网上资料很多的
@@ -141,12 +139,12 @@ Map
 
 #### arraylist
 
- 底层实现, 默认为10 , *//扩容newCapacity = (int) ( 1.5 \* oldCapacity )*
+底层实现默认为10 , 扩容newCapacity = (int) ( 1.5 \* oldCapacity )
 
 - 如果提前知道数组元素较多，可以在添加元素前通过调用ensureCapacity()方法提前增加容量以减小后期容量自动增长的开销。
-- \* 也可以通过带初始容量的构造器初始化这个容量。
+- 也可以通过带初始容量的构造器初始化这个容量。
 - ArrayList不是线程安全的。所以比较快
--  \* 如果需要应用到多线程中，需要在外部做同步
+-  如果需要应用到多线程中，需要在外部做同步
 
 ```java
  private void grow(int minCapacity) {
@@ -168,8 +166,6 @@ Map
 ```
 
 linkedlist 双向链表, 随机访问效率低, 插入效率高. 
-
-arraylist默认扩容1.5倍. 
 
 #### hashmap, concurrentmap
 
