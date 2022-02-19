@@ -273,9 +273,12 @@ Heart-beat（心跳）和keepalive非常类似，都是发送一个信号给对�
 
 ### RPC
 
-优点:
+优点: 
 
-解决分布式系统调用问题, 实现透明性. 其实http是最常用的承载RPC的通信协议之一。而且我们可以在http 上传输xml和json这样的文本协议，也可以是protobuf和thrift这样的二进制协议.TCP的RPC不用写一串http请求.
+1. 解决分布式系统调用问题, 实现透明性. 
+2. 接口封装, 调用方便
+
+其实http是最常用的承载RPC的通信协议之一。而且我们可以在http 上传输xml和json这样的文本协议，也可以是protobuf和thrift这样的二进制协议.            TCP的RPC不用写一串http请求.
 
 接口调用是什么协议?不幂等的用TCP, 幂等的用UDP.
 
