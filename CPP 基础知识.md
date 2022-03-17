@@ -456,6 +456,44 @@ void func(const A &a)
 - 虚函数继承，不管是单继承还是多继承，都是继承了基类的vptr。(32位操作系统4字节，64位操作系统 8字节)！
 - 虚继承,继承基类的vptr。
 
+### 智能指针
+
+智能指针？（说了unique ptr和shared ptr）
+
+1. shared_ptr
+2. unique_ptr
+3. weak_ptr
+4. auto_ptr（被 C++11 弃用）
+
+- Class shared_ptr 实现共享式拥有（shared ownership）概念。多个智能指针指向相同对象，该对象和其相关资源会在 “最后一个 reference 被销毁” 时被释放。
+- Class unique_ptr 实现独占式拥有（exclusive ownership）或严格拥有（strict ownership）概念，保证同一时间内只有一个智能指针可以指向该对象。你可以移交拥有权。它对于避免内存泄漏（resource leak）——如 new 后忘记 delete ——特别有用。
+
+##### shared_ptr
+
+多个智能指针可以共享同一个对象，对象的最末一个有责任销毁对象，并清理与该对象相关的所有资源。
+
+- 支持定制型删除器（custom deleter），可防范 Cross-DLL 问题（对象在动态链接库（DLL）中被 new 创建，却在另一个 DLL 内被 delete 销毁）、自动解除互斥锁
+
+##### weak_ptr
+
+weak_ptr 允许你共享但不拥有某对象，一旦最末一个拥有该对象的智能指针失去了所有权，任何 weak_ptr 都会自动成空（empty）。因此，在 default 和 copy 构造函数之外，weak_ptr 只提供 “接受一个 shared_ptr” 的构造函数。weak_ptr是shared_ptr的"观察者"，它与一个shared_ptr绑定，但却不参与引用计数的计算，在需要时，它还能摇身一变，生成一个与它所"观察"的shared_ptr共享引用计数器的新shared_ptr。
+
+- 可打破环状引用（cycles of references，两个其实已经没有被使用的对象彼此互指，使之看似还在 “被使用” 的状态）的问题
+
+##### unique_ptr
+
+unique_ptr 是 C++11 才开始提供的类型，是一种在异常时可以帮助避免资源泄漏的智能指针。采用独占式拥有，意味着可以确保一个对象和其相应的资源同一时间只被一个 pointer 拥有。一旦拥有着被销毁或编程 empty，或开始拥有另一个对象，先前拥有的那个对象就会被销毁，其任何相应资源亦会被释放。
+
+- unique_ptr 用于取代 auto_ptr
+
+2）shared_ptr的计数器什么时候清零？（释放对象时计数器减一）追问：什么情况下释放对象（不会）
+
+C++11的标准库提供了两种解决问题的思路：1、不允许多个对象管理一个指针（unique_ptr）；2、允许多个对象管理同一个指针，但仅当管理这个指针的最后一个对象析构时才调用delete（shared_ptr）。这两个思路的共同点是：只！允！许！delete一次！
+
+重载 new 或者改构造函数，打日志，然后启动程序跑一个完整流程，然后写脚本分析日志。具体地说，你每次分配内存的时候都能得到一个地址，delete 的时候自然也能记录到被 delete 的地址，如果 log 里面出现了 new/delete 不成对的地址，那显然是有问题的。怎么通过这个地址找到代码，办法很多，基本上只要能确定泄露对象的 size，就能猜个八九不离十了。
+
+
+
 
 
 ### 函数指针那些事
